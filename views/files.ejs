@@ -1,0 +1,16 @@
+<div>
+    <form action="/files/uploadFile" enctype="multipart/form-data" method="POST">
+        <input type="file" name="myFile">
+        <input type="submit" value="Upload your file">
+    </form>
+
+    <form action="/files/uploadmultiple" enctype="multipart/form-data" method="POST">
+        <input type="file" name="myFile" multiple>
+        <input type="submit" value="Upload your files">
+    </form>
+
+    <form action="/files/uploadphoto" enctype="multipart/form-data" method="POST">
+        <input type="file" name="myImage" accept="image/*">
+        <input type="submit" value="Upload Photo">
+    </form>
+</div>

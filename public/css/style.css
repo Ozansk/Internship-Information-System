@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.site{
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../img/kampüs.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+
+.form-box{
+    width: 400px;
+    height: 500px;
+    position: relative;
+    margin: 6% auto;
+    background: #fff;
+    padding: 5px;
+    border-radius: 30px;
+}
+
+.top{
+    margin-left: 10px;
+}
+
+.top_Register{
+    margin-left: 150px;
+}
+
+.logo{
+    margin-left: 110px;
+    margin-top: 20px; 
+}
+
+.login_list{
+    margin-top: 220px;
+    margin-left: 50px;
+}
+
+.login_list_register{
+    margin-top: 150px;
+    margin-left: 50px;
+}
+
+.form_group{
+    top: 240px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+}
+
+.form_group_register_1{
+    margin-top: 15px;
+    margin-left: 15px;
+    top: 240px;
+    position: absolute;
+    width: 180px;
+    transition: .5s;
+}
+
+.form_group_register_2{
+    margin-top: 15px;
+    margin-left: 210px;
+    top: 240px;
+    position: absolute;
+    width: 180px;
+    transition: .5s;
+}
+
+.form_control{
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    margin-bottom: 10px;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+}
+
+.submit_btn{
+    background-color: #4CAF50;
+    font-size: 20px;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 9px #999;
+ }
+
+.submit_btn:hover {
+    background-color: #3e8e41;
+}
+
+.submit_btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.button-box{
+    width: 220px;
+    margin:35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #ff61241f;
+    border-radius: 30px;
+}
+
+.account{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+}
+  
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.closebtn:hover {
+    color: black;
+}
+
