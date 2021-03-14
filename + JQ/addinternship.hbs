@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>AddInternship</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/Internship.css">
+  <link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel = "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/mint-choc/jquery-ui.css" rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <div class="backdrop">
+      <div class="col-md-4 mx-auto forms">
+        <h4 class="text-center">INTERNSHIP</h4>
+        <form>
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" placeholder="Company Name" required>
+          </div>
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" id="datepicker1" placeholder="Start Date" required>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" id="datepicker2" placeholder="Finish Date" required>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <div class="form-group col-md-12">
+            <input type="number" class="form-control" placeholder="Work Day" required>
+          </div>
+          <div class="form-group cold-md-12">
+            <input type="submit" class="btn btn-warning form-control" value="Add List">
+          </div>
+        </form>
+      </div>
+
+      <div class="bass">
+          <table class="liste">
+        <tr>
+          <th>
+            Company
+          </th>
+          <th>
+            Day
+          </th>
+        </tr>
+
+        {{#each personList}}
+
+        <tr>
+          <td>
+            {{company}}
+          </td>
+          <td>
+            {{day}}
+          </td>
+        </tr>
+
+        {{/each}}
+      </table>
+      </div>
+    </div>
+
+
+  <script type="text/javascript">
+    $(function(){
+      $('#datepicker1').multiDatesPicker({
+        dateformat: "d/m/y"
+      });
+      $('#datepicker2').multiDatesPicker();
+    });
+  </script>
+</body>
+
+
+
+
+
+
+
+
+
+</html>
+
+
+
+
+

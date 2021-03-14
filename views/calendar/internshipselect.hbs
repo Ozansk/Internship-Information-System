@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/mini.png" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Internship Information System</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/Internship.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+  <script>
+    //getter
+    var firstDay = $('.selector').datepicker('option', 'firstDay');
+    //setter
+    $('.selector').datepicker('option', 'firstDay', 1);
+    $(document).ready(function () {
+      var today = new Date();
+      var y = today.getFullYear();
+      $('#mdp-demo').multiDatesPicker({
+        addDisabledDates: ['07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
+        numberOfMonths: [3, 4],
+        defaultDate: '1/1/' + y,
+        altField: '#altField',
+        maxPicks: 20,
+      });
+    });
+
+    (function (factory) {
+      if (typeof define === "function" && define.amd) {
+
+        // AMD. Register as an anonymous module.
+        define(["../widgets/datepicker"], factory);
+      } else {
+
+        // Browser globals
+        factory(jQuery.datepicker);
+      }
+    }(function (datepicker) {
+
+      datepicker.regional.tr = {
+        closeText: "kapat",
+        prevText: "&#x3C;geri",
+        nextText: "ileri&#x3e",
+        currentText: "bugün",
+        monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+          "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+        monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz",
+          "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+        dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+        dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+        dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+        weekHeader: "Hf",
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ""
+      };
+      datepicker.setDefaults(datepicker.regional.tr);
+      return datepicker.regional.tr;
+    }));
+  </script>
+
+  <script type="text/javascript">
+    $(function () {
+      $('#datepicker1').multiDatesPicker({
+        dateformat: "d/m/y"
+      });
+      $('#datepicker2').multiDatesPicker();
+    });
+  </script>
+
+</head>
+
+
+
+<body>
+
+  <form action="/select" method="POST" id="loginform">
+
+    <label;" for="form1">Company Name</label;"><br>
+    <input type="text" id="form1" name="form1" class="form-control" placeholder="Company Name" required>
+
+    <label;" for="form2">Work Day</label;"><br>
+    <input type="number" id="form2" name="form2" class="form-control" placeholder="Work Day" required>
+
+    <br>
+    <div id="mdp-demo"><input name="form3" id="altField"></div>
+
+  </form>
+
+  <button type="submit" class="submit_btn" form="loginform">Confirm</button>
+
+</body>
+
+
+<style>
+  body {
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.548);
+    text-align: center;
+  }
+
+  h1 {
+    color: maroon;
+    margin-left: 40px;
+  }
+
+  .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+    background: black none;
+    /* a color that fits the widget theme */
+    color: green;
+    /* a color that is readeable with the color above */
+  }
+
+  table.ui-datepicker-calendar {
+    border-collapse: separate;
+  }
+
+  .ui-datepicker-calendar td {
+    border: 1px solid transparent;
+  }
+</style>
+
+</html>

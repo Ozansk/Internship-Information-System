@@ -1,0 +1,69 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/mini.png" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Internship Information System</title>
+
+  <script>
+    window.getData = function (r) {
+
+      var i = r.parentNode.parentNode.rowIndex;
+      var k = document.getElementsByClassName("liste")[0].rows[i].cells[0].innerHTML;
+      document.getElementById('hiddenField').value = k;
+      document.getElementById("hiddenForm").submit();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="site">
+    {{#if message}}
+    <div class="alert">{{message}}</div>
+    {{/if}}
+
+    <h3 class="top" style='text-align:center;'>Staj Kayıtları</h3>
+
+    <table class="liste">
+      <tr>
+        <th>Internship ID</th>
+        <th>Student ID</th>
+        <th>Company</th>
+        <th>Work Day</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Onay</th>
+        <th>İşlem</th>
+      </tr>
+
+      {{#each personList}}
+
+      <tr>
+        <td>{{internshipID}}</td>
+        <td>{{studentID}}</td>
+        <td>{{company}}</td>
+        <td>{{work_day}}</td>
+        <td>{{start_date}}</td>
+        <td>{{end_date}}</td>
+        <td>{{confirmation}}</td>
+        <td><button onclick="getData(this)">Onayla</button></td>
+      </tr>
+
+      {{/each}}
+    </table>
+
+    <div class="buttons">
+      <button onclick="location.href='/internshipselect'" class="indexbutton" style='width: 50%;'>
+        Staj Bilgisi Ekle
+      </button>
+    </div>
+</body>
+
+<html>
+
+</html>
+<form id="hiddenForm" method="post" action="/confirmupdate">
+  <input type="hidden" id="hiddenField" name="identify" value="">
+</form>
+
+</html>

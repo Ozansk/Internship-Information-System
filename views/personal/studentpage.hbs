@@ -1,0 +1,51 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/mini.png" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Internship Information System</title>
+</head>
+
+<body>
+  <div class="site">
+    {{#if message}}
+    <div class="alert">{{message}}</div>
+    {{/if}}
+
+    <h3 class="top" style='text-align:center;'>Staj Kayıtlarım</h3>
+
+    <table class="liste">
+      <tr>
+        <th>Internship ID</th>
+        <th>Student ID</th>
+        <th>Company</th>
+        <th>Work Day</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Onay</th>
+      </tr>
+
+      {{#each personList}}
+
+      <tr>
+        <td>{{internshipID}}</td>
+        <td>{{studentID}}</td>
+        <td>{{company}}</td>
+        <td>{{work_day}}</td>
+        <td>{{start_date}}</td>
+        <td>{{end_date}}</td>
+        <td>{{confirmation}}</td>
+      </tr>
+
+      {{/each}}
+    </table>
+
+    <div class="buttons">
+      <button onclick="location.href='/internshipselect'" class="indexbutton" style='width: 50%;'>
+        Staj Bilgisi Ekle
+      </button>
+      <button onclick="location.href='/file'" class="indexbutton" style='width: 50%;' download="hello.pdf" href='#' id='link'>
+        Zorunluluk Belgesi İndir
+      </button>
+    </div>
+</body>

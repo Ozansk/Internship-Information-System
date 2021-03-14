@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Jquery Türkçe Tarih</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+  <div class="kalender">
+    <script>
+      //getter
+      var firstDay = $('.selector').datepicker('option', 'firstDay');
+      //setter
+      $('.selector').datepicker('option', 'firstDay', 1);
+      $(document).ready(function () {
+        var today = new Date();
+        var y = today.getFullYear();
+        $('#mdp-demo').multiDatesPicker({
+          addDates: ['07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
+          numberOfMonths: [3, 4],
+          defaultDate: '01/01/' + y,
+          altField: '#altField'
+        });
+      });
+
+      (function (factory) {
+        if (typeof define === "function" && define.amd) {
+
+          // AMD. Register as an anonymous module.
+          define(["../widgets/datepicker"], factory);
+        } else {
+
+          // Browser globals
+          factory(jQuery.datepicker);
+        }
+      }(function (datepicker) {
+
+        datepicker.regional.tr = {
+          closeText: "kapat",
+          prevText: "&#x3C;geri",
+          nextText: "ileri&#x3e",
+          currentText: "bugün",
+          monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+          monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz",
+            "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+          dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+          dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+          dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+          weekHeader: "Hf",
+          firstDay: 1,
+          isRTL: false,
+          showMonthAfterYear: false,
+          yearSuffix: ""
+        };
+        datepicker.setDefaults(datepicker.regional.tr);
+
+        return datepicker.regional.tr;
+
+      }));
+
+    </script>
+  </div>
+
+</head>
+
+<body>
+
+  <form action="/action_page.php">
+    <div id="mdp-demo">
+
+    </div>
+    <input type="hidden" id="altField">
+    <input type="submit">
+  </form>
+
+</body>
+
+
+
+<style>
+  body {
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.548);
+    text-align: center;
+  }
+
+  h1 {
+    color: maroon;
+    margin-left: 40px;
+  }
+
+  .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+    background: black none;
+    /* a color that fits the widget theme */
+    color: green;
+    /* a color that is readeable with the color above */
+  }
+
+  table.ui-datepicker-calendar {
+    border-collapse: separate;
+  }
+
+  .ui-datepicker-calendar td {
+    border: 1px solid transparent;
+  }
+</style>
+
+</html>
