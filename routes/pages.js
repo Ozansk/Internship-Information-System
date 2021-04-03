@@ -64,11 +64,6 @@ router.get('/internshipselect', (req, res) => {
     else { res.status(200).render('calendar/internshipselect') }
 })
 
-router.get('/file', (req, res) => {
-    if (verifyController.verify(req, res) == 403) { res.status(403).send() }
-    else { res.status(200).render('files_view/file') }
-})
-
 //---------------Update
 
 router.post('/confirmupdate', (req, res) => {
@@ -93,10 +88,28 @@ router.post('/adduser', (req, res) => {
 
 router.post('/file', (req, res) => {
     if (verifyController.verify(req, res) == 403) { res.status(403).send() }
-    else { selectController.pdf(req,res) }
+    else { selectController.pdf(req, res) }
 })
 
+router.post('/excel', (req, res) => {
+    if (verifyController.verify(req, res) == 403) { res.status(403).send() }
+    else { selectController.excel(req, res) }
+})
 
+router.post('/search', (req, res) => {
+    if (verifyController.verify(req, res) == 403) { res.status(403).send() }
+    else { addingController.search(req, res) }
+})
+
+router.post('/change_password', (req, res) => {
+    if (verifyController.verify(req, res) == 403) { res.status(403).send() }
+    else { updateController.change_password(req, res) }
+})
+
+router.post('/holidayselector', (req, res) => {
+    if (verifyController.verify(req, res) == 403) { res.status(403).send() }
+    else { selectController.holidays(req, res) }
+})
 
 module.exports = router;
 

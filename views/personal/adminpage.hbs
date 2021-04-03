@@ -86,16 +86,16 @@
                   <form action="/adduser" method="POST" class="login_list_row" id="registerform">
                     <div class="form_group_column">
                       <label for="name">Name</label>
-                      <input type="name" id="name" name="name" class="form_control_r" placeholder="Enter Name" />
+                      <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name" />
                       <label for="email">Email</label>
-                      <input type="email" id="email" name="email" class="form_control_r" placeholder="Enter Email" />
+                      <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
                     </div>
                     <div class="form_group_column">
                       <label for="password">Password</label>
-                      <input type="password" id="password" name="password" class="form_control_r"
+                      <input type="password" id="password" name="password" class="form-control"
                         placeholder="Create Password" />
                       <label for="password2">Confirm Password</label>
-                      <input type="password" id="password2" name="password2" class="form_control_r"
+                      <input type="password" id="password2" name="password2" class="form-control"
                         placeholder="Confirm Password" />
                     </div>
                   </form>
@@ -112,45 +112,122 @@
     </div>
   </div>
 
+  <h3 class="top" style='text-align:center; margin-top: 40px;'>Sistemde Kayıtlı Kullanıcılar</h3>
   <!--- Image Slider -->
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add"
-    style="margin-left:1400px; margin-top:50px;">Kullanıcı Ekle</button>
+  <div class="row">
+    <div class="pull-left">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add"
+        style="margin-left: 1100px; margin-top:10px;">Kullanıcı Ekle</button>
+    </div>
 
-  <table class="table table-hover table-dark" style="width: 90%; margin-left: 75px; margin-top: 40px">
-    <tr>
-      <th scope="col">
-        ID
-      </th>
-      <th scope="col">
-        Name
-      </th>
-      <th scope="col">
-        Email
-      </th>
-      <th scope="col">
-        Type
-      </th>
-    </tr>
+    <div class="pull-right">
+      <div class="input-group">
+        <div class="form-outline">
+          <select form="search_form" class="form-control select2bs4" style=" margin-top:10px;" name="drop_list"
+            id="drop_list" style="width: 100%">
+            <option value="0">Okul Numarası</option>
+            <option value="1">İsim</option>
+            <option value="2">Email</option>
+          </select>
+        </div>
+        <form action="/search" method="POST" name="search_form" id="search_form">
+          <input style="margin-top:10px;" type="text" class="form-control" id="search" name="search">
+        </form>
+      </div>
+    </div>
 
-    {{#each personList}}
+    <table class="table table-hover table-dark" style="width: 90%; margin-left: 75px; margin-top: 40px">
+      <tr>
+        <th scope="col">
+          ID
+        </th>
+        <th scope="col">
+          Name
+        </th>
+        <th scope="col">
+          Email
+        </th>
+        <th scope="col">
+          Type
+        </th>
+      </tr>
 
-    <tr>
-      <td>
-        {{id}}
-      </td>
-      <td>
-        {{name}}
-      </td>
-      <td>
-        {{email}}
-      </td>
-      <td>
-        {{type}}
-      </td>
-    </tr>
+      {{#each personList}}
 
-    {{/each}}
-  </table>
+      <tr>
+        <td>
+          {{id}}
+        </td>
+        <td>
+          {{name}}
+        </td>
+        <td>
+          {{email}}
+        </td>
+        <td>
+          {{type}}
+        </td>
+      </tr>
+
+      {{/each}}
+    </table>
+    {{#if internshipList}}
+    <table class="table table-hover table-dark" style="width: 90%; margin-left: 75px; margin-top: 40px">
+      <tr>
+        <th scope="col">
+          internshipID
+        </th>
+        <th scope="col">
+          studentID
+        </th>
+        <th scope="col">
+          company
+        </th>
+        <th scope="col">
+          work_day
+        </th>
+        <th scope="col">
+          start_date
+        </th>
+        <th scope="col">
+          finish_date
+        </th>
+        <th scope="col">
+          confirmation
+        </th>
+      </tr>
+
+
+      {{#each internshipList}}
+      <tr>
+        <td>
+          {{internshipID}}
+        </td>
+        <td>
+          {{studentID}}
+        </td>
+        <td>
+          {{company}}
+        </td>
+        <td>
+          {{work_day}}
+        </td>
+        <td>
+          {{start_date}}
+        </td>
+        <td>
+          {{finish_date}}
+        </td>
+        {{#if confirmation}}
+        <td><img src="/img/Checkmark.png" alt="" border=3 height=50 width=50></img></td>
+        {{else}}
+        <td><img src="/img/crossmark.png" alt="" border=3 height=50 width=50></img></td>
+        {{/if}}
+      </tr>
+
+      {{/each}}
+      {{/if}}
+    </table>
 
 </body>
 

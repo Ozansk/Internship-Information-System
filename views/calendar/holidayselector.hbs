@@ -57,7 +57,7 @@
         var y = today.getFullYear();
         $('#mdp-demo').multiDatesPicker({
           addDates: ['07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
-          numberOfMonths: [1, 4],
+          numberOfMonths: [1, 1],
           defaultDate: '01/01/' + y,
           altField: '#altField'
         });
@@ -106,14 +106,13 @@
 
 <body>
 
-  <form action="/action_page.php">
-    <div id="mdp-demo">
+<form action="/holidayselector" method="POST" id="loginform">
 
-    </div>
-    <input type="hidden" id="altField">
-    <input type="submit">
-  </form>
+      <div id="mdp-demo"><input name="holiday" id="altField"></div>
 
+</form>
+
+  <button type="submit" class="submit_btn" form="loginform">Confirm</button>
 </body>
 
 

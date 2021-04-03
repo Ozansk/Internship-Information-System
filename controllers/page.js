@@ -52,6 +52,12 @@ exports.studentpage = async (req, res) => {
             'end_date': rows[i].end_date,
             'confirmation': rows[i].confirmation
           }
+          if(person.start_date == "0000-00-00"){          
+            person.start_date = "N/A";
+          }
+          if(person.end_date == "0000-00-00"){          
+            person.end_date = "N/A";
+          }
           // Add object into array
           personList.push(person);
         }
@@ -107,7 +113,14 @@ exports.teacherpage = async (req, res) => {
             'work_day': rows[i].work_day,
             'start_date': rows[i].start_date,
             'end_date': rows[i].end_date,
-            'confirmation': rows[i].confirmation
+            'confirmation': rows[i].confirmation,
+            'grade': rows[i].grade
+          }
+          if(person.start_date == "0000-00-00"){          
+            person.start_date = "N/A";
+          }
+          if(person.end_date == "0000-00-00"){          
+            person.end_date = "N/A";
           }
           // Add object into array
           personList.push(person);

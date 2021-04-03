@@ -1,4 +1,6 @@
 const mysql = require("mysql");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -67,17 +69,65 @@ exports.updaterecord = async (req, res) => {
 
     var auth = "UPDATE internship_list SET studentID = ?, company = ?, work_day = ?, start_date = ?, end_date = ?, confirmation = ? WHERE internshipID = ?";
 
-    db.query(auth, [p2, p3, p4, p5, p6, p7,p1], async (error, rows, results) => {
+    db.query(auth, [p2, p3, p4, p5, p6, p7, p1], async (error, rows, results) => {
 
       if (error) {
         console.log(error)
       }
-      else{
+      else {
         res.redirect("/teacherpage")
       }
     });
 
   }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+
+exports.change_password = async (req, res) => {
+  try {
+    var first = req.body.password;
+    var second = req.body.password2;
+
+    if (first != second) {
+      res.status(200).redirect("/studentpage");
+    }
+
+    else {
+
+      let token = req.cookies.jwt;
+
+      var payload
+      try {
+        payload = jwt.verify(token, process.env.JWT_SECRET)
+      }
+      catch (e) {
+        if (e instanceof jwt.JsonWebTokenError) {
+          // if the error thrown is because the JWT is unauthorized, return a 401 error
+          return res.status(401).end()
+        }
+        // otherwise, return a bad request error
+        return res.status(400).end()
+      }
+      //res.send(`Welcome ${payload.id}!`)
+
+      let num = payload.id;
+      let hashedPassword = await bcrypt.hash(first, 8);
+
+      db.query("UPDATE users SET password = ? WHERE id = ?", [hashedPassword, num], async (error, rows, results) => {
+        if (error) {
+          console.log(error);
+        }
+
+        else {
+          res.redirect("/studentpage");
+        }
+      });
+    }
+  }
+
   catch (error) {
     console.log(error);
   }

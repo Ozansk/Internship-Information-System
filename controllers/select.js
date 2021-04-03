@@ -1,7 +1,9 @@
 const mysql = require("mysql");
-const FileReader = require('filereader');
-const Blob = require('blob');
-
+const jwt = require("jsonwebtoken");
+const { PDFDocument } = require('pdf-lib');
+const fontkit = require('@pdf-lib/fontkit');
+const fs = require("fs");
+const Excel = require('exceljs');
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -108,9 +110,25 @@ exports.select = (req, res) => {
     console.log("StartX : " + startdate)
     console.log("EndX : " + enddate)
   */
-  var ahmetnum = 16290126
 
-  db.query('INSERT INTO internship_list SET ?', { studentID: ahmetnum, company: p1, work_day: p2, start_date: startdate, end_date: enddate, }, (error, results) => {
+  let token = req.cookies.jwt;
+
+  var payload
+  try {
+    payload = jwt.verify(token, process.env.JWT_SECRET)
+  }
+  catch (e) {
+    if (e instanceof jwt.JsonWebTokenError) {
+      // if the error thrown is because the JWT is unauthorized, return a 401 error
+      return res.status(401).end()
+    }
+    // otherwise, return a bad request error
+    return res.status(400).end()
+  }
+  //res.send(`Welcome ${payload.id}!`)
+
+  let num = payload.id;
+  db.query('INSERT INTO internship_list SET ?', { studentID: num, company: p1, work_day: p2, start_date: startdate, end_date: enddate, }, (error, results) => {
     if (error) {
       console.log(error);
     } else {
@@ -121,9 +139,25 @@ exports.select = (req, res) => {
   })
 }
 
+
+exports.holidays = function (req, res) {
+  var arr = req.body.holiday;
+  var i;
+  for (i = 0; i < arr.length; i = i + 12) {
+    date = arr.slice(i, i + 10);
+    date = date.slice(6, 10) + "-" + date.slice(0, 2) + "-" + date.slice(3, 5);
+    db.query("INSERT INTO holiday_list (holiday_date) VALUES (?)", [date], async (error, rows, results) => {
+      if (error)
+        console.log(error);
+    });
+  }
+  res.redirect("/adminpage");
+}
+
 exports.pdf = function (req, res) {
+  /////////////////////////// Firstly, adding file to mySQL table as blob 
   /*    var fs = require('fs');
-      var temp_path = "C://Users//lenovo//Desktop//Deneme.pdf";
+      var temp_path = "C://Users//lenovo//Desktop//File.pdf";
       fs.open(temp_path, 'r', function (status, fd) {
         if (status) {
           console.log(status.message);
@@ -151,25 +185,146 @@ exports.pdf = function (req, res) {
           });
         });
       });*/
-  //////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////// end Blob file adding
 
-  var blob;
-  db.query("SELECT * FROM files", async (error, rows, results) => {
-    if (error)
-      console.log(error);
+  let token = req.cookies.jwt;
 
-    else {
-      // when calling file blob, need to write "blob.file"
-      blob = rows[0];
-      var fileData = blob.file;
-      var file_name = "Zorunluluk Belgesi"
-      res.writeHead(200, {
-        "Content-Disposition": "attachment;filename=" + file_name,
-        'Content-Type': 'application/pdf',
-        'Content-Length': fileData.length
-      });
-      res.write(fileData);
-      res.end(fileData);
+  var payload
+  try {
+    payload = jwt.verify(token, process.env.JWT_SECRET)
+  }
+  catch (e) {
+    if (e instanceof jwt.JsonWebTokenError) {
+      // if the error thrown is because the JWT is unauthorized, return a 401 error
+      return res.status(401).end()
     }
+    // otherwise, return a bad request error
+    return res.status(400).end()
+  }
+  //res.send(`Welcome ${payload.id}!`)
+
+  let num = payload.id;
+  var number = num.toString();
+  var blob;
+  db.query("SELECT name FROM users WHERE id = ?", [num], async (error, rows, results) => {
+
+    let name = rows[0].name;
+    db.query("SELECT * FROM files", async (error, rows, results) => {
+      if (error)
+        console.log(error);
+
+      else {
+        const font = fs.readFileSync('./public/char/Ubuntu-R.ttf');
+        function toBuffer(ab) {
+          var buf = Buffer.alloc(ab.byteLength);
+          var view = new Uint8Array(ab);
+          for (var i = 0; i < buf.length; ++i) {
+            buf[i] = view[i];
+          }
+          return buf;
+        }
+
+        blob = rows[0];
+        fileData = blob.file;
+        const pdfDoc = await PDFDocument.load(fileData);
+        pdfDoc.registerFontkit(fontkit);
+        const times = await pdfDoc.embedFont(font);
+        //const times = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0];
+        const { width, height } = firstPage.getSize();
+
+        firstPage.drawText(number, {
+          x: 235,
+          y: 495,
+          font: times,
+          size: 10
+        });
+        firstPage.drawText(name, {
+          x: 390,
+          y: 495,
+          font: times,
+          size: 10
+        });
+
+        var pdfBytes = await pdfDoc.save();
+        pdfBytes = toBuffer(pdfBytes);
+        var fileData = pdfBytes;
+        var file_name = "Zorunluluk Belgesi.pdf"
+        res.writeHead(200, {
+          "Content-Disposition": "attachment;filename=" + file_name,
+          'Content-Type': "application/pdf",
+          'Content-Length': fileData.length
+        });
+        res.write(fileData);
+        res.end();
+      }
+    });
   });
 }
+
+
+exports.excel = function (req, res) {
+
+  let workbook = new Excel.Workbook();
+  let worksheet = workbook.addWorksheet('Debtors');
+  query = "SELECT users.id, users.name, internship_list.company, internship_list.work_day, internship_list.start_date, internship_list.end_date, internship_list.confirmation FROM users INNER JOIN internship_list ON users.id=internship_list.studentID";
+  db.query(query, async (error, rows, results) => {
+    var userList = [];
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].confirmation) {
+        var user = {
+          'studentID': rows[i].id,
+          'name': rows[i].name,
+          'company': rows[i].company,
+          'work_day': rows[i].work_day,
+          'start_date': rows[i].start_date,
+          'end_date': rows[i].end_date
+        }
+        if (user.start_date == "0000-00-00") {
+          user.start_date = "N/A";
+        }
+        if (user.finish_date == "0000-00-00") {
+          user.end_date = "N/A";
+        }
+        userList.push(user);
+      }
+    }
+
+    worksheet.columns = [
+      { header: 'Student ID', key: 'studentID', width: 25 },
+      { header: 'Name', key: 'name', width: 25 },
+      { header: 'Company', key: 'company', width: 25 },
+      { header: 'Work Day', key: 'work_day', width: 25 },
+      { header: 'Start Date', key: 'start_date', width: 25, style: { numFmt: 'yyyy-mm-dd' }},
+      { header: 'End Date', key: 'end_date', width: 25, style: { numFmt: 'yyyy-mm-dd' } }
+    ]
+    worksheet.getRow(1).font = {bold: true}
+    for (var i = 0; i < userList.length; i++) {
+      worksheet.addRow({
+        studentID: userList[i].studentID,
+        name: userList[i].name,
+        company: userList[i].company,
+        work_day: userList[i].work_day,
+        start_date: new Date(userList[i].start_date),
+        end_date: new Date(userList[i].end_date)
+      });
+    }
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=" + "Students.xlsx"
+    );
+
+    return workbook.xlsx.write(res).then(function () {
+      res.status(200).end();
+    });
+  });
+
+}
+
+
