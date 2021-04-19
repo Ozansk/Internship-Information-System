@@ -61,7 +61,7 @@ router.get('/internshiprange', (req, res) => {
 
 router.get('/internshipselect', (req, res) => {
     if (verifyController.verify(req, res) == 403) { res.status(403).send() }
-    else { res.status(200).render('calendar/internshipselect') }
+    else { selectController.internship(req, res) }
 })
 
 //---------------Update

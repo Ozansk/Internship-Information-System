@@ -96,6 +96,13 @@ exports.select = (req, res) => {
   var p2 = req.body.form2;
   var p3 = req.body.form3;
 
+  var getDaysArray = function (start, end) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+      arr.push(new Date(dt));
+    }
+    return arr;
+  };
+
   var tarih1 = p3
   tarih1 = tarih1.slice(0, 10)
   var tarih2 = p3
@@ -104,39 +111,81 @@ exports.select = (req, res) => {
 
   var startdate = tarih1.slice(6, 10) + "-" + tarih1.slice(0, 2) + "-" + tarih1.slice(3, 5)
   var enddate = tarih2.slice(6, 10) + "-" + tarih2.slice(0, 2) + "-" + tarih2.slice(3, 5)
-  /*
-    console.log("Company : " + p1)
-    console.log("Work Day : " + p2)
-    console.log("StartX : " + startdate)
-    console.log("EndX : " + enddate)
-  */
 
-  let token = req.cookies.jwt;
 
-  var payload
-  try {
-    payload = jwt.verify(token, process.env.JWT_SECRET)
-  }
-  catch (e) {
-    if (e instanceof jwt.JsonWebTokenError) {
-      // if the error thrown is because the JWT is unauthorized, return a 401 error
-      return res.status(401).end()
+  var daylist = getDaysArray(new Date(startdate), new Date(enddate));
+  daylist.map((v) => v.toISOString().slice(0, 10)).join("")
+
+  db.query("SELECT holiday_date FROM holiday_list", (error, rows, results) => {
+    var holidays = [];
+    for (var i = 0; i < rows.length; i++) {
+      holidays.push(rows[i].holiday_date);
     }
-    // otherwise, return a bad request error
-    return res.status(400).end()
-  }
-  //res.send(`Welcome ${payload.id}!`)
 
-  let num = payload.id;
-  db.query('INSERT INTO internship_list SET ?', { studentID: num, company: p1, work_day: p2, start_date: startdate, end_date: enddate, }, (error, results) => {
-    if (error) {
-      console.log(error);
-    } else {
-      //console.log(results);
-      console.log('DONE!!!');
-      return res.redirect("/studentpage")
+    var temp = 0;
+    for (var i = 0; i < daylist.length; i++) {
+      var birthday = new Date(daylist[i]);
+      //2021-08-23T00:00:00.000Z
+      let isholiday = birthday.toISOString().slice(0, 10);
+      var day1 = birthday.getDay();
+
+
+      for (var j = 0; j < holidays.length; j++) {
+        if (isholiday == holidays[j]) {
+          console.log("AAAAAAAAAAAAAAAA-");
+          temp--;
+        }
+        if ((day1 == 0 && isholiday == holidays[j]) || (day1 == 6 && isholiday == holidays[j]))
+          temp++;
+      }
+
+      temp++;
+
+      if (day1 == 0 || day1 == 6)
+        temp--;
     }
-  })
+
+    console.log(temp);
+    /*
+      console.log("Company : " + p1)
+      console.log("Work Day : " + p2)
+      console.log("StartX : " + startdate)
+      console.log("EndX : " + enddate)
+    */
+
+
+    if (p2 == temp) {
+      let token = req.cookies.jwt;
+
+      var payload
+      try {
+        payload = jwt.verify(token, process.env.JWT_SECRET)
+      }
+      catch (e) {
+        if (e instanceof jwt.JsonWebTokenError) {
+          // if the error thrown is because the JWT is unauthorized, return a 401 error
+          return res.status(401).end()
+        }
+        // otherwise, return a bad request error
+        return res.status(400).end()
+      }
+      //res.send(`Welcome ${payload.id}!`)
+
+      let num = payload.id;
+      db.query('INSERT INTO internship_list SET ?', { studentID: num, company: p1, work_day: p2, start_date: startdate, end_date: enddate, }, (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          //console.log(results);
+          console.log('DONE!!!');
+          return res.redirect("/studentpage")
+        }
+      })
+    }
+    else {
+      res.redirect("/internshipselect");
+    }
+  });
 }
 
 
@@ -146,7 +195,7 @@ exports.holidays = function (req, res) {
   for (i = 0; i < arr.length; i = i + 12) {
     date = arr.slice(i, i + 10);
     date = date.slice(6, 10) + "-" + date.slice(0, 2) + "-" + date.slice(3, 5);
-    db.query("INSERT INTO holiday_list (holiday_date) VALUES (?)", [date], async (error, rows, results) => {
+    db.query("INSERT IGNORE INTO holiday_list (holiday_date) VALUES (?)", [date], async (error, rows, results) => {
       if (error)
         console.log(error);
     });
@@ -267,7 +316,7 @@ exports.pdf = function (req, res) {
 exports.excel = function (req, res) {
 
   let workbook = new Excel.Workbook();
-  let worksheet = workbook.addWorksheet('Debtors');
+  let worksheet = workbook.addWorksheet('Onaylılar');
   query = "SELECT users.id, users.name, internship_list.company, internship_list.work_day, internship_list.start_date, internship_list.end_date, internship_list.confirmation FROM users INNER JOIN internship_list ON users.id=internship_list.studentID";
   db.query(query, async (error, rows, results) => {
     var userList = [];
@@ -281,12 +330,12 @@ exports.excel = function (req, res) {
           'start_date': rows[i].start_date,
           'end_date': rows[i].end_date
         }
-        if (user.start_date == "0000-00-00") {
-          user.start_date = "N/A";
-        }
-        if (user.finish_date == "0000-00-00") {
-          user.end_date = "N/A";
-        }
+        /*        if (user.start_date == "0000-00-00") {
+                  user.start_date = "N/A";
+                }
+                if (user.finish_date == "0000-00-00") {
+                  user.end_date = "N/A";
+                }*/
         userList.push(user);
       }
     }
@@ -296,10 +345,10 @@ exports.excel = function (req, res) {
       { header: 'Name', key: 'name', width: 25 },
       { header: 'Company', key: 'company', width: 25 },
       { header: 'Work Day', key: 'work_day', width: 25 },
-      { header: 'Start Date', key: 'start_date', width: 25, style: { numFmt: 'yyyy-mm-dd' }},
+      { header: 'Start Date', key: 'start_date', width: 25, style: { numFmt: 'yyyy-mm-dd' } },
       { header: 'End Date', key: 'end_date', width: 25, style: { numFmt: 'yyyy-mm-dd' } }
     ]
-    worksheet.getRow(1).font = {bold: true}
+    worksheet.getRow(1).font = { bold: true }
     for (var i = 0; i < userList.length; i++) {
       worksheet.addRow({
         studentID: userList[i].studentID,
@@ -328,3 +377,18 @@ exports.excel = function (req, res) {
 }
 
 
+
+exports.internship = function (req, res) {
+
+  db.query("SELECT holiday_date FROM holiday_list", async (error, rows, results) => {
+    days = [];
+    for (var i = 0; i < rows.length; i++) {
+      var day = rows[i].holiday_date[5] + rows[i].holiday_date[6] + "/" + rows[i].holiday_date[8] + rows[i].holiday_date[9] + "/" + rows[i].holiday_date.slice(0, 4);
+      days.push(day);
+    }
+    res.status(200).render('calendar/internshipselect', {
+      message: 'There is at least one internship record on system',
+      "days": days
+    });
+  });
+}

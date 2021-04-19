@@ -51,55 +51,6 @@ exports.addNewUser = (req, res) => {
 }
 
 
-/*exports.search = (req, res) => {
-  var text = req.body.search;
-  var personList = [], i;
-  var sql = ["SELECT * FROM users WHERE  id = ?", "SELECT * FROM users WHERE  email = ?", "SELECT * FROM users WHERE  name = ?"];
-    db.query(sql[2], [text], async (error, rows, results) => {
-      for (var i = 0; i < rows.length; i++) {
-        person = {
-          'id': rows[i].id,
-          'name': rows[i].name,
-          'email': rows[i].email,
-          'type': rows[i].type
-        }
-        personList.push(person);
-      }
-      if (personList != undefined){
-        db.query("SELECT * FROM internship_list WHERE studentID = ?", [personList[0].id], async (error, rows, results) => {
-
-          var internshipList = [];
-          for (var i = 0; i < rows.length; i++) {
-            var internship = {
-              'internshipID': rows[i].internshipID,
-              'studentID': rows[i].studentID,
-              'company': rows[i].company,
-              'work_day': rows[i].work_day,
-              'start_date': rows[i].start_date,
-              'finish_date': rows[i].end_date,
-              'confirmation': rows[i].confirmation
-            }
-            if (internship.start_date == "0000-00-00") {
-              internship.start_date = "N/A";
-            }
-            if (internship.finish_date == "0000-00-00") {
-              internship.finish_date = "N/A";
-            }
-            // Add object into array
-            internshipList.push(internship);
-
-            res.status(200).render('personal/adminpage', {
-              message: 'There is at least one internship record on system',
-              "personList": personList,
-              "internshipList": internshipList
-            });
-          }
-        });
-      }
-    });
-}*/
-
-
 exports.search = (req, res) => {
   var text = req.body.search;
   var temp = req.body.drop_list;

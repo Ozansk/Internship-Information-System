@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <link rel="stylesheet" href="../css/style_for_pages.css">
 
   <script>
     window.getData = function (r) {
@@ -37,10 +38,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="../teacherpage">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#password">Şifre Değiştir</a>
           </li>
           <li>
-            <span style="margin-left: 1400px; background-color: #343a40;" data-toggle="modal" data-target="#exit">
+            <span style="margin-left: 1250px; background-color: #343a40;" data-toggle="modal" data-target="#exit">
               <img src="img/logout.ico">
             </span>
           </li>
@@ -74,6 +78,37 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="modal fade" id="password">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1>ŞİFRE DEĞİŞTİR</h1>
+              </div>
+              <div class="modal-body">
+                <form action="/change_password" method="POST" class="login_list_row" id="change_password">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" class="form-control"
+                    placeholder="Create New Password" />
+                  <label for="password2">Confirm Password</label>
+                  <input type="password" id="password2" name="password2" class="form-control"
+                    placeholder="Confirm Password" />
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="location.href=''">Geri</button>
+                <button type="submit" class="btn btn-success" form="change_password">Onayla</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h3 class="top" style='text-align:center; margin-top: 40px;'>Staj Kayıtları</h3>
 
   <div class="row">
@@ -90,41 +125,55 @@
     </div>
   </div>
 
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
-  <table class="table table-hover table-dark" style="width: 90%; margin-left: 75px; margin-top: 20px">
-    <tr>
-      <th scope="col">Internship ID</th>
-      <th scope="col">Student ID</th>
-      <th scope="col">Company</th>
-      <th scope="col">Work Day</th>
-      <th scope="col">Start Date</th>
-      <th scope="col">End Date</th>
-      <th scope="col">Grade</th>
-      <th scope="col">Onay</th>
-      <th scope="col">İşlem</th>
-    </tr>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-hover table-dark" style="width: 90%; margin-left: 75px; margin-top: 20px">
+      <tr>
+        <th scope="col">Internship ID</th>
+        <th scope="col">Student ID</th>
+        <th scope="col">Company</th>
+        <th scope="col">Work Day</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Onay</th>
+        <th scope="col">İşlem</th>
+      </tr>
 
-    {{#each personList}}
+      {{#each personList}}
 
-    <tr>
-      <td>{{internshipID}}</td>
-      <td>{{studentID}}</td>
-      <td>{{company}}</td>
-      <td>{{work_day}}</td>
-      <td>{{start_date}}</td>
-      <td>{{end_date}}</td>
-      <td>{{grade}}</td>
-    {{#if confirmation}}
-      <td><img src="/img/Checkmark.png" alt="" border=3 height=50 width=50></img></td>
-    {{else}}
-      <td><img src="/img/crossmark.png" alt="" border=3 height=50 width=50></img></td>
-    {{/if}}
-      <td><button onclick="getData(this)" class="btn btn-info">Onayla</button></td>
-    </tr>
+      <tr>
+        <td>{{internshipID}}</td>
+        <td>{{studentID}}</td>
+        <td>{{company}}</td>
+        <td>{{work_day}}</td>
+        <td>{{start_date}}</td>
+        <td>{{end_date}}</td>
+        <td>{{grade}}</td>
+        {{#if confirmation}}
+        <td><img src="/img/Checkmark.png" alt="" border=3 height=50 width=50></img></td>
+        {{else}}
+        <td><img src="/img/crossmark.png" alt="" border=3 height=50 width=50></img></td>
+        {{/if}}
+        <td><button onclick="getData(this)" class="btn btn-info">Onayla</button></td>
+      </tr>
 
-    {{/each}}
-  </table>
-</div>
+      {{/each}}
+    </table>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="social">
+        <ul class="media">
+          <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fab fa-google-plus-g" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
 </body>
 

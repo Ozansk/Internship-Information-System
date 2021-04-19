@@ -35,6 +35,7 @@
 
 
   <script>
+
     //getter
     var firstDay = $('.selector').datepicker('option', 'firstDay');
     //setter
@@ -42,12 +43,18 @@
     $(document).ready(function () {
       var today = new Date();
       var y = today.getFullYear();
+      var days = $('#days').val();
+      var temp = [];
+      for (i = 0; i < days.length; i = i + 11) {
+          date = days.slice(i, i + 10);
+          temp.push(date);
+      }
       $('#mdp-demo').multiDatesPicker({
-        addDisabledDates: ['07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
+        addDisabledDates: temp,
         numberOfMonths: [3, 4],
         defaultDate: '1/1/' + y,
         altField: '#altField',
-        maxPicks: 20,
+        maxPicks: 2,
       });
     });
 
@@ -100,7 +107,6 @@
 
 
 <body>
-
   <form action="/select" method="POST" id="loginform">
 
     <label;" for="form1">Company Name</label;"><br>
@@ -110,12 +116,12 @@
     <input type="number" id="form2" name="form2" class="form-control" placeholder="Work Day" required>
 
     <br>
-    <div id="mdp-demo"><input name="form3" id="altField"></div>
+    <div id="mdp-demo"><input name="form3" id="altField" type="hidden"></div>
 
   </form>
 
   <button type="submit" class="submit_btn" form="loginform">Confirm</button>
-
+  <div id="temp"><input name="form4" id="days" value={{days}} type="hidden"></div>
 </body>
 
 
