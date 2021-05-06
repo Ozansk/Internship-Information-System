@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/mini.png" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Internship Information System</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="img/mini.png"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../adminpage">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='../internshiprange'>Staj Aralığı Belirleme</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="../holidayselector">Tatil Günü Belirleme<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../adduser">Kullanıcı Ekle</a>
+          </li>
+          <li>
+            <span onclick="location.href='/login'" style="margin-left: 1000px; background-color: #343a40;">
+              <img src="img/logout.ico">
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="kalender">
+    <script>
+      //getter
+      var firstDay = $('.selector').datepicker('option', 'firstDay');
+      //setter
+      $('.selector').datepicker('option', 'firstDay', 1);
+      $(document).ready(function () {
+        var today = new Date();
+        var y = today.getFullYear();
+        $('#mdp-demo').multiDatesPicker({
+          addDates: ['01/01/' + y, '07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
+          numberOfMonths: [1, 1],
+          defaultDate: '01/01/' + y,
+          altField: '#altField'
+        });
+      });
+
+      (function (factory) {
+        if (typeof define === "function" && define.amd) {
+
+          // AMD. Register as an anonymous module.
+          define(["../widgets/datepicker"], factory);
+        } else {
+
+          // Browser globals
+          factory(jQuery.datepicker);
+        }
+      }(function (datepicker) {
+
+        datepicker.regional.tr = {
+          closeText: "kapat",
+          prevText: "&#x3C;geri",
+          nextText: "ileri&#x3e",
+          currentText: "bugün",
+          monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+          monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz",
+            "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+          dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+          dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+          dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+          weekHeader: "Hf",
+          firstDay: 1,
+          isRTL: false,
+          showMonthAfterYear: false,
+          yearSuffix: ""
+        };
+        datepicker.setDefaults(datepicker.regional.tr);
+
+        return datepicker.regional.tr;
+
+      }));
+
+    </script>
+  </div>
+
+</head>
+
+<body>
+
+  <form action="/holidayselector" method="POST" id="loginform">
+
+    <div id="mdp-demo"><input name="holiday" id="altField"></div>
+
+  </form>
+
+  <button type="submit" class="submit_btn" form="loginform">Confirm</button>
+</body>
+
+
+
+<style>
+  body {
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.548);
+    text-align: center;
+  }
+
+  h1 {
+    color: maroon;
+    margin-left: 40px;
+  }
+
+  .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+    background: black none;
+    /* a color that fits the widget theme */
+    color: green;
+    /* a color that is readeable with the color above */
+  }
+
+  table.ui-datepicker-calendar {
+    border-collapse: separate;
+  }
+
+  .ui-datepicker-calendar td {
+    border: 1px solid transparent;
+  }
+</style>
+
+</html>

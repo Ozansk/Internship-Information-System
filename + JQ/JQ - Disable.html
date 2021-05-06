@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Tarih Seçim Ekranı</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css"
+    rel="stylesheet" />
+  <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
+  <script
+    src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<style>td.ui-datepicker-week-end {
+    visibility: hidden;
+}
+
+.ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+        background: #743620 none;
+        color: white;
+}
+
+
+</style>
+
+  <script>
+    $(document).ready(function () {
+      var today = new Date();
+      var y = today.getFullYear();
+      $('#mdp-demo').multiDatesPicker({
+	      addDisabledDates: ['07/15/' + y, '08/30/' + y, '04/23/' + y, '05/01/' + y, '05/19/' + y, '10/29/' + y],
+        numberOfMonths: [3, 4],
+        defaultDate: '1/1/' + y,
+        altField: '#altField',
+		maxPicks: 20,
+		});
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <form action="/action_page.php">
+    <div id="mdp-demo"></div>
+    <input type="text" id="altField">
+    <input type="submit">
+  </form>
+
+</body>
+
+
+
+<style>
+  body {
+    background-color: linen;
+    text-align: center;
+  }
+
+  h1 {
+    color: maroon;
+    margin-left: 40px;
+  }
+</style>
+
+</html>

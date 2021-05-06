@@ -1,0 +1,10 @@
+-student-teacher		İnternship ----> student id lazım
+
+-Admin				Tatil günleri ----> database e aktarma
+-Admin				User ----> Activation
+
+
+
+
+
+
