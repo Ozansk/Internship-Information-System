@@ -1,0 +1,43 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/mini.png" />
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Internship Information System</title>
+</head>
+
+<div class="site">
+  {{#if message}}
+    {{#unless flag}}
+      <div class="alert">{{message}}</div>
+    {{/unless}}
+    {{#if flag}}
+      <div class="success">{{message}}</div> 
+    {{/if}}
+  {{/if}}
+<div class="form-box">
+    <h3 class="top" style='text-align:center;'>Ankara University Internship Information System</h3>
+    <img src="../img/logo.jpg" alt="" class="logo">
+    <div class="login_list" >
+      <form action="/auth/register" method="POST" class="login_list_row" id="registerform">
+        <div class="form_group_column">
+          <label for="name">Name</label>
+          <input type="name" id="name" name="name" class="form_control_r" placeholder="Enter Name" />
+          <label for="id">Student Id</label>
+          <input type="id" id="id" name="id" class="form_control_r" placeholder="Enter Student Id" />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form_control_r" placeholder="Enter Email" />
+        </div>
+        <div class="form_group_column">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form_control_r" placeholder="Create Password" />
+          <label for="password2">Confirm Password</label>
+          <input type="password" id="password2" name="password2" class="form_control_r"
+            placeholder="Confirm Password" />
+        </div>
+      </form>
+      <button type="submit" class="submit_btn" form="registerform">Register</button>
+    </div>
+    <p class="account">Have An Account? <a href="/Login">Login</a></p>
+  </div>
+</div>

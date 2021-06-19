@@ -1,0 +1,63 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/mini.png" />
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Internship Information System</title>
+
+    <script>
+        window.onload = function () {
+            document.getElementById('Student ID').value = document.getElementById('id').innerHTML;
+            document.getElementById('Name').value = document.getElementById('name').innerHTML;
+            document.getElementById('Email').value = document.getElementById('email').innerHTML;
+            document.getElementById('Type').value = document.getElementById('type').innerHTML;
+        }
+    </script>
+</head>
+
+
+
+<body>
+    <div class="site">
+
+        {{#if message}}
+        <div class="alert">{{message}}</div>
+        {{/if}}
+
+        <div class="login_list">
+            <form action="/updatetype" class="login_list_row" method="POST" id="loginform">
+                <div class="form_group_column">
+
+                    <label;" for="Student ID">Student ID</label;"><br>
+                    <input readonly type="text" id="Student ID" name="Student_ID" class="form-control"
+                        placeholder="Student ID" /><br>
+
+                    <label;" for="Name">Name</label;"><br>
+                    <input readonly type="text" id="Name" name="Name" class="form-control" placeholder="Name" /><br>
+
+                    <label;" for="Email">Email</label;"><br>
+                    <input readonly type="text" id="Email" name="Email" class="form-control" placeholder="Email" /><br>
+
+                    <label;" for="Type">Type</label;"><br>
+                    <input readonly type="text" id="Type" name="Type" class="form-control" placeholder="Type" /><br>
+
+                        <label for="types">Change Type:</label><br>
+                        <select name="types" id="types">
+                            <option value="user">User</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                </div>
+            </form>
+            <button type="submit" class="submit_btn" form="loginform">Confirm</button>
+        </div>
+    </div>
+
+    <div="TxT">
+        <p id="id"> {{testObj.id}} </p>
+        <p id="name"> {{testObj.name}} </p>
+        <p id="email"> {{testObj.email}} </p>
+        <p id="type"> {{testObj.type}} </p>
+        </div>
+
+</body>
